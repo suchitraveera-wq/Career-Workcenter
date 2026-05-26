@@ -7,7 +7,10 @@ import { JobApplicationTracker } from '@/components/work-center/job-application-
 import { ResourceBookmarks } from '@/components/work-center/resource-bookmarks'
 import { InspirationalVideos } from '@/components/work-center/inspirational-videos'
 import { CertificationArea } from '@/components/work-center/certification-area'
+import { ApplicationVisualizations } from '@/components/work-center/application-visualizations'
+import { CareerNews } from '@/components/work-center/career-news'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { 
   LayoutDashboard, 
   Briefcase, 
@@ -16,7 +19,9 @@ import {
   Award,
   Sparkles,
   Menu,
-  X
+  X,
+  BarChart3,
+  Newspaper,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
@@ -25,6 +30,8 @@ import { cn } from '@/lib/utils'
 const navigationItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'jobs', label: 'Job Tracker', icon: Briefcase },
+  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { id: 'news', label: 'Career News', icon: Newspaper },
   { id: 'resources', label: 'Resources', icon: BookMarked },
   { id: 'videos', label: 'Inspiration', icon: Video },
   { id: 'certifications', label: 'Certifications', icon: Award },
@@ -125,6 +132,24 @@ export default function WorkCenterPage() {
             
             <InspirationalQuote />
 
+            {/* Quick Visualizations Preview */}
+            <Card className="border-border/50 bg-card/50">
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <BarChart3 className="h-4 w-4 text-primary" />
+                    Application Analytics
+                  </CardTitle>
+                  <Button variant="ghost" size="sm" onClick={() => setActiveTab('analytics')}>
+                    View Full Analytics
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ApplicationVisualizations />
+              </CardContent>
+            </Card>
+
             <div className="grid gap-6 lg:grid-cols-2">
               <ResourceBookmarks />
               <CertificationArea />
@@ -144,6 +169,31 @@ export default function WorkCenterPage() {
 
             <StatsOverview />
             <JobApplicationTracker />
+          </TabsContent>
+
+          {/* Analytics View */}
+          <TabsContent value="analytics" className="space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold tracking-tight">Application Analytics</h2>
+              <p className="text-muted-foreground">
+                Visualize your job search progress and identify patterns.
+              </p>
+            </div>
+
+            <StatsOverview />
+            <ApplicationVisualizations />
+          </TabsContent>
+
+          {/* Career News View */}
+          <TabsContent value="news" className="space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold tracking-tight">Career News & Insights</h2>
+              <p className="text-muted-foreground">
+                Stay informed about PM job market trends and opportunities.
+              </p>
+            </div>
+
+            <CareerNews />
           </TabsContent>
 
           {/* Resources View */}
